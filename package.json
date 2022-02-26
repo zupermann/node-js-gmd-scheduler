@@ -1,12 +1,13 @@
 {
   "name": "scheduler",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS GMD control",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "George A. (https://github.com/zupermann)",
   "license": "ISC",
   "dependencies": {
     "node-cron": "^3.0.0",
