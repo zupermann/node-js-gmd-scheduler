@@ -1,12 +1,13 @@
 const cron = require('node-cron');
 const GMD = require('./gmd-crypto');
+const config = require('./config');
 
 
 const dataSendMoney = {
   requestType: 'sendMoney',
   recipient: 'GMD-43MP-76UW-L69N-ALW39',
   amountNQT: '10000000000',
-  secretPhrase: 'sender account passphrase is used for local signing and is not sent to server',
+  secretPhrase: config.passPhrase1,
   feeNQT: '1000000000',
   deadline: '15'
 };

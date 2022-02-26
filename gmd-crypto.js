@@ -1,7 +1,7 @@
 const axios = require('axios');
 const crypto = require('./crypto-util');
 
-const baseURL = 'https://ccone.asiminei.com:6877/nxt?';
+const baseURL = require('./config').url + '/nxt?';
 
 GMD = {};
 GMD.signTransaction = (unsignedTransaction, passPhrase) => {
@@ -21,7 +21,7 @@ GMD.isSignedTransactionResponse = (data) => {
         data.hasOwnProperty('fullHash');
 };
 
-GMD.apiCall = (method, params) => {
+GMD.apiCall = (method, params, callback) => {
     let pass = null;
     if(params && params.hasOwnProperty('secretPhrase')){
         pass = params.secretPhrase;
@@ -31,7 +31,7 @@ GMD.apiCall = (method, params) => {
         }
         
     }
-    GMD.callHttp(method, baseURL + (new URLSearchParams(params)).toString(), pass);
+    GMD.callHttp(method, baseURL + (new URLSearchParams(params)).toString(), pass, callback);
 }
 
 GMD.getPublicKey = (pass) => {
@@ -39,12 +39,14 @@ GMD.getPublicKey = (pass) => {
 }
 
 
-GMD.callHttp = (method, url, pass) => {
+GMD.callHttp = (method, url, pass, callback) => {
     axios({method: method, url: url}).then((res)=> {
         console.log(`Status: ${res.status} body: ${JSON.stringify(res.data)}`);
         handleAPICallResponse(res.data, pass);
+        if(callback) callback(res.data);
       }, (error) => {
           console.log(error);
+          if(callback) callback(error);
       });
 }
   
