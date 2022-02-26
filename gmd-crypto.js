@@ -41,7 +41,7 @@ GMD.getPublicKey = (pass) => {
 
 GMD.callHttp = (method, url, pass, callback) => {
     axios({method: method, url: url}).then((res)=> {
-        console.log(`Status: ${res.status} body: ${JSON.stringify(res.data)}`);
+        console.log(`Response status on request to ${url} is ${res.status}\nresponse body:\n${JSON.stringify(res.data, null, 2)}`);
         handleAPICallResponse(res.data, pass);
         if(callback) callback(res.data);
       }, (error) => {
@@ -51,7 +51,7 @@ GMD.callHttp = (method, url, pass, callback) => {
 }
   
 handleAPICallResponse = (data, pass) => {
-    if(GMD.isTransaction(data) && !GMD.isSignedTransactionResponse(data)){ 
+    if(GMD.isTransaction(data) && !GMD.isSignedTransactionResponse(data) && pass){ 
         const signature = GMD.signTransaction(data.unsignedTransactionBytes, pass);
         console.log('signature '+ signature);
         GMD.apiCall('post', {requestType: 'broadcastTransaction', transactionBytes: signature});

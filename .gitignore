@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# do not config to git as it contains passphrase
+config.js
