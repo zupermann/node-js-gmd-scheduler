@@ -1,6 +1,7 @@
-const GMD = require('./gmd-crypto');
+const GMD = require('gmd-nodejs-sdk');
 const config = require('./config');
 
+GMD.setURL(config.url)
 
 require('node-cron').schedule('* * * * *', () => {
   const dataSendMoney = {
